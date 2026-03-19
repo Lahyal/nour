@@ -1,438 +1,298 @@
 {% extends 'layouts/master' %}
-
 {% set product = pages.product %}
-
 {% block title %}{{ product.name }} — {{ store.name }}{% endblock %}
 {% block description %}{{ product.description | striptags | slice(0, 160) }}{% endblock %}
 
 {% block content %}
+<div class="nour-product-wrap container">
+  <div class="nour-product-grid">
 
-{# Breadcrumb #}
-<nav class="breadcrumb">
-  <a href="{{ store.url }}">{{ 'الرئيسية' | trans }}</a>
-  <span class="sep">›</span>
-  <a href="{{ product.category.url }}">{{ product.category.name }}</a>
-  <span class="sep">›</span>
-  <span class="current">{{ product.name }}</span>
-</nav>
-
-{# Product Hero #}
-<div class="product-hero">
-
-  {# ── GALLERY ── #}
-  <div class="gallery-col">
-    <div class="main-img-track" id="mainImgTrack">
-
-      {% if product.has_special_price %}
-        <span class="img-label-sale">
-          {% if product.offer.percent %}
-            خصم {{ product.offer.percent }}%
-          {% else %}
-            عرض خاص
-          {% endif %}
-        </span>
-      {% endif %}
-
-      {% if product.is_bestseller %}
-        <span class="img-label-top">{{ 'الأكثر مبيعاً' | trans }}</span>
-      {% endif %}
-
-      {# Main Image #}
-      {% if product.images | length > 0 %}
-        <img src="{{ product.images[0].url }}"
-             alt="{{ product.name }}"
-             id="mainProductImg"
-             loading="eager">
-      {% else %}
-        <img src="{{ settings.placeholder | asset_url }}"
-             alt="{{ product.name }}"
-             id="mainProductImg">
-      {% endif %}
-
-      {# Image nav dots #}
-      {% if product.images | length > 1 %}
-        <div class="img-nav">
-          {% for image in product.images %}
-            <button class="img-dot {% if loop.first %}active{% endif %}"
-                    onclick="goSlide({{ loop.index0 }}, this)"></button>
-          {% endfor %}
-        </div>
-      {% endif %}
-    </div>
-
-    {# Thumbnails #}
-    {% if product.images | length > 1 %}
-      <div class="thumbs">
-        {% for image in product.images %}
-          <div class="thumb {% if loop.first %}active{% endif %}"
-               onclick="switchThumb(this, '{{ image.url }}')">
-            <img src="{{ image.url }}" alt="{{ product.name }} - {{ loop.index }}" loading="lazy">
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-
-  {# ── PRODUCT INFO ── #}
-  <div class="info-col">
-
-    {# Social Proof Row #}
-    {% if settings.show_rating_in_header and product.rating.count > 0 %}
-      <div class="social-proof-row">
-        <div class="sp-avatars">
-          <span>أ</span><span>م</span><span>ن</span><span>ر</span>
-        </div>
-        <div class="sp-text">
-          <strong>{{ product.rating.count | number_format }} {{ 'عميل' | trans }}</strong>
-          {{ 'اشتروا هذا المنتج' | trans }}
-        </div>
-      </div>
-    {% endif %}
-
-    {# Title #}
-    <h1 class="product-title">{{ product.name }}</h1>
-    {% if product.subtitle %}
-      <p class="product-subtitle">{{ product.subtitle }}</p>
-    {% endif %}
-
-    {# Rating #}
-    {% if product.rating.count > 0 %}
-      <div class="rating-bar">
-        <span class="stars-gold">
-          {% for i in 1..5 %}
-            {% if i <= product.rating.average %}★{% else %}☆{% endif %}
-          {% endfor %}
-        </span>
-        <span class="rating-num">{{ product.rating.average }}</span>
-        <span class="rating-count">
-          <a href="#reviews">{{ product.rating.count }} {{ 'تقييم' | trans }}</a>
-        </span>
-        <span class="rating-badge">94% {{ 'يوصون به' | trans }}</span>
-      </div>
-    {% endif %}
-
-    {# Benefit Pills — from product tags #}
-    {% if product.tags | length > 0 %}
-      <div class="benefit-pills">
-        {% for tag in product.tags | slice(0, 4) %}
-          <div class="bpill">
-            <i class="hgi-stroke hgi-checkmark-circle-01 icon-xs"></i>
-            {{ tag.name }}
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {# ── PRICE BLOCK ── #}
-    <div class="price-block">
-      <div class="price-row">
-        <span class="price-now" id="priceNow">{{ product.price.amount }}</span>
-        <span class="price-currency">{{ product.price.currency }}</span>
+    {# ── GALLERY ── #}
+    <div class="nour-gallery">
+      <div class="nour-main-img" id="nourMainImg">
         {% if product.has_special_price %}
-          <span class="price-was">{{ product.regular_price.formatted }}</span>
-          {% if product.offer.percent %}
-            <span class="price-save">{{ 'وفري' | trans }} {{ product.offer.percent }}%</span>
-          {% endif %}
+          <span class="nour-img-badge nour-img-badge--sale">
+            {% if product.offer.percent %}خصم {{ product.offer.percent }}%{% else %}عرض خاص{% endif %}
+          </span>
         {% endif %}
-      </div>
-      <div class="stock-row">
-        <span class="stock-dot"></span>
-        {% if product.quantity > 0 %}
-          {{ 'متوفر' | trans }}
-          {% if product.quantity <= 10 %}
-            — {{ product.quantity }} {{ 'قطعة متبقية فقط' | trans }}
-          {% endif %}
-        {% else %}
-          {{ 'نفد المخزون' | trans }}
+        {% if product.is_bestseller %}
+          <span class="nour-img-badge nour-img-badge--top">الأكثر مبيعاً</span>
         {% endif %}
+        <img src="{{ product.images[0].url | default(theme.settings.get('placeholder','')) }}"
+             alt="{{ product.name }}" id="nourProductImg" loading="eager">
       </div>
-    </div>
-
-    {# ── BUNDLE OPTIONS ── #}
-    {% if settings.bundle_enabled and product.has_special_price %}
-      {% component 'product.nour-bundle-options' %}
-    {% endif %}
-
-    {# ── SUBSCRIPTION TOGGLE ── #}
-    {% if settings.subscription_enabled %}
-      <div class="sub-card">
-        <div class="sub-option selected" id="subOnce" onclick="selectSub('once')">
-          <div class="sub-radio" id="radioOnce"></div>
-          <div class="sub-body">
-            <div class="sub-name">{{ 'شراء مرة واحدة' | trans }}</div>
-            <div class="sub-desc">{{ product.price.formatted }} — {{ 'شحن مجاني' | trans }}</div>
-          </div>
-        </div>
-        <div class="sub-option" id="subRecurring" onclick="selectSub('recurring')">
-          <div class="sub-radio" id="radioRecurring"></div>
-          <div class="sub-body">
-            <div class="sub-name">
-              <i class="hgi-stroke hgi-refresh icon-xs"></i>
-              {{ 'اشتركي واوفري كل شهر' | trans }}
+      {% if product.images | length > 1 %}
+        <div class="nour-thumbs">
+          {% for image in product.images %}
+            <div class="nour-thumb {% if loop.first %}active{% endif %}"
+                 onclick="nourThumb(this,'{{ image.url }}')">
+              <img src="{{ image.url }}" alt="{{ product.name }}" loading="lazy">
             </div>
-            <div class="sub-desc">
-              {{ 'وفري' | trans }} {{ settings.subscription_discount }}%
-              — {{ 'ألغي في أي وقت' | trans }}
-            </div>
-          </div>
-          <span class="sub-badge">{{ 'وفري' | trans }} {{ settings.subscription_discount }}%</span>
-        </div>
-      </div>
-    {% endif %}
-
-    {# ── VARIANTS ── #}
-    {% if product.options | length > 0 %}
-      {% for option in product.options %}
-        <div class="field-label">
-          {{ option.name }}:
-          <span id="variantLabel-{{ option.id }}">{{ option.values[0].name }}</span>
-        </div>
-        <div class="variants">
-          {% for value in option.values %}
-            <button class="vbtn {% if loop.first %}active{% endif %} {% if not value.is_available %}out{% endif %}"
-                    onclick="selectVariant(this, '{{ value.name }}', '{{ option.id }}')"
-                    data-option="{{ option.id }}"
-                    data-value="{{ value.id }}">
-              {{ value.name }}
-            </button>
           {% endfor %}
         </div>
-      {% endfor %}
-    {% endif %}
-
-    {# ── QUANTITY ── #}
-    <div class="qty-row">
-      <div class="qty-ctrl">
-        <button class="qty-btn" onclick="chQty(-1)">−</button>
-        <input class="qty-val" type="number" id="qtyVal" value="1" min="1"
-               max="{{ product.quantity }}" name="quantity">
-        <button class="qty-btn" onclick="chQty(1)">+</button>
-      </div>
-      <div class="subtotal-txt">
-        {{ 'المجموع' | trans }}:
-        <strong id="subtotalDisplay">{{ product.price.formatted }}</strong>
-      </div>
-    </div>
-
-    {# ── CTA BUTTONS ── #}
-    <div class="cta-stack">
-      {% if product.quantity > 0 %}
-        <salla-add-product-button id="addBtn"
-          product-id="{{ product.id }}"
-          class="btn-main">
-          <i class="hgi-stroke hgi-shopping-cart-01"></i>
-          {{ 'أضيفي للسلة' | trans }}
-        </salla-add-product-button>
-      {% else %}
-        <button class="btn-main" disabled>{{ 'نفد المخزون' | trans }}</button>
       {% endif %}
-      <salla-buy-now-button product-id="{{ product.id }}" class="btn-gold">
-        <i class="hgi-stroke hgi-zap"></i>
-        {{ 'اشتري الآن' | trans }}
-      </salla-buy-now-button>
     </div>
 
-    {# Recent buyers #}
-    {% if settings.show_recent_buyers %}
-      <div class="recent-buyers">
-        <i class="hgi-stroke hgi-fire icon-sm" style="color:var(--gold-dark)"></i>
-        <div class="rb-avs">
-          <div class="rb-av">أ</div>
-          <div class="rb-av">ف</div>
-          <div class="rb-av">ه</div>
-        </div>
-        <span>{{ 'منذ ساعة — مشتريات جديدة' | trans }}</span>
-      </div>
-    {% endif %}
+    {# ── INFO ── #}
+    <div class="nour-info">
 
-    {# Payment Methods #}
-    <salla-payment-icons></salla-payment-icons>
-
-    {# Trust Row #}
-    <div class="trust-mini">
-      <div class="tm-item">
-        <i class="hgi-stroke hgi-truck icon-sm"></i>
-        {{ 'شحن مجاني' | trans }}
-      </div>
-      <div class="tm-item">
-        <i class="hgi-stroke hgi-return-request icon-sm"></i>
-        {{ 'إرجاع 30 يوم' | trans }}
-      </div>
-      <div class="tm-item">
-        <i class="hgi-stroke hgi-lock icon-sm"></i>
-        {{ 'دفع آمن' | trans }}
-      </div>
-      <div class="tm-item">
-        <i class="hgi-stroke hgi-gift icon-sm"></i>
-        {{ 'تغليف فاخر' | trans }}
-      </div>
-    </div>
-
-    {# ── ACCORDION ── #}
-    <div class="acc-list">
-
-      {# Ingredients / Description #}
-      {% if product.description %}
-        <div class="acc-item">
-          <button class="acc-head" onclick="toggleAcc(this)">
-            {{ 'تفاصيل المنتج' | trans }}
-            <span class="acc-icon">+</span>
-          </button>
-          <div class="acc-body">
-            {{ product.description | raw }}
-          </div>
-        </div>
-      {% endif %}
-
-      {# Shipping #}
-      <div class="acc-item">
-        <button class="acc-head" onclick="toggleAcc(this)">
-          {{ 'الشحن والإرجاع' | trans }}
-          <span class="acc-icon">+</span>
-        </button>
-        <div class="acc-body">
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;gap:10px;align-items:center">
-              <i class="hgi-stroke hgi-truck icon-sm" style="color:var(--color-primary);flex-shrink:0"></i>
-              {{ 'شحن مجاني للطلبات فوق 200 ر.س' | trans }}
-            </div>
-            <div style="display:flex;gap:10px;align-items:center">
-              <i class="hgi-stroke hgi-clock-01 icon-sm" style="color:var(--color-primary);flex-shrink:0"></i>
-              {{ 'التوصيل خلال 2-3 أيام عمل' | trans }}
-            </div>
-            <div style="display:flex;gap:10px;align-items:center">
-              <i class="hgi-stroke hgi-return-request icon-sm" style="color:var(--color-primary);flex-shrink:0"></i>
-              {{ 'إرجاع مجاني خلال 30 يوم' | trans }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-{# ── BELOW THE FOLD SECTIONS ── #}
-
-{# Full-width Lifestyle Image #}
-{% if product.images | length > 2 %}
-  <div class="fw-section">
-    <img src="{{ product.images[2].url }}" alt="{{ product.name }}" loading="lazy">
-    <div class="fw-overlay"></div>
-  </div>
-{% endif %}
-
-{# Product Reviews #}
-<div class="reviews-section" id="reviews">
-  <salla-rating-stars product-id="{{ product.id }}"></salla-rating-stars>
-  <salla-reviews product-id="{{ product.id }}"></salla-reviews>
-</div>
-
-{# Related Products #}
-{% if product.related_products | length > 0 %}
-  <div class="related-section">
-    <span class="section-tag">{{ 'قد يعجبك أيضاً' | trans }}</span>
-    <h2 class="section-h2">{{ 'منتجات' | trans }} <em>{{ 'مكمّلة' | trans }}</em></h2>
-    <div class="related-grid">
-      {% for related in product.related_products | slice(0, 3) %}
-        {% include 'partials/product-card' with { product: related } %}
-      {% endfor %}
-    </div>
-  </div>
-{% endif %}
-
-{% endblock %}
-
-{# ── STICKY BAR ── #}
-{% block sticky_bar %}
-  <div class="sticky-bar" id="stickyBar">
-    <div class="sb-product">
-      <div class="sb-thumb">
-        {% if product.images | length > 0 %}
-          <img src="{{ product.images[0].url }}" alt="{{ product.name }}">
-        {% else %}
-          <i class="hgi-stroke hgi-package-01" style="font-size:22px;color:var(--gold-light)"></i>
-        {% endif %}
-      </div>
-      <div>
-        <div class="sb-name">{{ product.name }}</div>
-        <div class="sb-price">{{ product.price.formatted }}</div>
-      </div>
-    </div>
-    <div class="sb-right">
+      {# Social proof #}
       {% if product.rating.count > 0 %}
-        <div class="sb-stars">
-          ★★★★★ {{ product.rating.average }}
+        <div class="nour-sp-row">
+          <div class="nour-sp-avs">
+            <span>أ</span><span>م</span><span>ن</span><span>ر</span>
+          </div>
+          <span class="nour-sp-txt">
+            <strong>{{ product.rating.count }}</strong> عميل اشتروا هذا المنتج
+          </span>
         </div>
       {% endif %}
-      <salla-add-product-button product-id="{{ product.id }}" class="sb-btn">
-        <i class="hgi-stroke hgi-shopping-cart-01" style="font-size:16px"></i>
-        {{ 'أضيفي للسلة' | trans }}
-      </salla-add-product-button>
+
+      {# Title #}
+      <h1 class="nour-product-title">{{ product.name }}</h1>
+      {% if product.subtitle %}
+        <p class="nour-product-sub">{{ product.subtitle }}</p>
+      {% endif %}
+
+      {# Rating #}
+      {% if product.rating.count > 0 %}
+        <div class="nour-rating-row">
+          <span class="nour-stars">
+            {% for i in 1..5 %}{% if i <= product.rating.average %}★{% else %}☆{% endif %}{% endfor %}
+          </span>
+          <span class="nour-rating-num">{{ product.rating.average }}</span>
+          <a href="#reviews" class="nour-rating-count">{{ product.rating.count }} تقييم</a>
+          <span class="nour-rating-badge">94% يوصون به</span>
+        </div>
+      {% endif %}
+
+      {# Tags as benefit pills #}
+      {% if product.tags | length > 0 %}
+        <div class="nour-pills">
+          {% for tag in product.tags | slice(0,4) %}
+            <span class="nour-pill">✓ {{ tag.name }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {# Price #}
+      <div class="nour-price-block">
+        <div class="nour-price-row">
+          <span class="nour-price-now" id="nourPriceNow">{{ product.price.amount }}</span>
+          <span class="nour-price-currency">{{ product.price.currency }}</span>
+          {% if product.has_special_price %}
+            <span class="nour-price-was">{{ product.regular_price.formatted }}</span>
+            {% if product.offer.percent %}
+              <span class="nour-price-save">وفري {{ product.offer.percent }}%</span>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="nour-stock-row">
+          <span class="nour-stock-dot {% if product.quantity <= 0 %}out{% endif %}"></span>
+          {% if product.quantity > 0 %}
+            متوفر{% if product.quantity <= 10 %} — {{ product.quantity }} قطعة متبقية فقط{% endif %}
+          {% else %}
+            نفد المخزون
+          {% endif %}
+        </div>
+      </div>
+
+      {# Bundle options #}
+      {% if theme.settings.get('bundle_enabled', true) and product.has_special_price %}
+        {% component 'product.nour-bundle-options' %}
+      {% endif %}
+
+      {# Subscription #}
+      {% if theme.settings.get('subscription_enabled', false) %}
+        <div class="nour-sub-card">
+          <div class="nour-sub-option selected" id="nourSubOnce" onclick="nourSub('once')">
+            <div class="nour-sub-radio" id="nourRadioOnce"></div>
+            <div>
+              <div class="nour-sub-name">شراء مرة واحدة</div>
+              <div class="nour-sub-desc">{{ product.price.formatted }} — شحن مجاني</div>
+            </div>
+          </div>
+          <div class="nour-sub-option" id="nourSubRec" onclick="nourSub('recurring')">
+            <div class="nour-sub-radio" id="nourRadioRec"></div>
+            <div>
+              <div class="nour-sub-name">اشتركي واوفري كل شهر</div>
+              <div class="nour-sub-desc">وفري {{ theme.settings.get('subscription_discount','15') }}% — ألغي في أي وقت</div>
+            </div>
+            <span class="nour-sub-badge">وفري {{ theme.settings.get('subscription_discount','15') }}%</span>
+          </div>
+        </div>
+      {% endif %}
+
+      {# Variants #}
+      {% if product.options | length > 0 %}
+        {% for option in product.options %}
+          <div class="nour-field-label">{{ option.name }}: <span id="nourVar-{{ option.id }}">{{ option.values[0].name }}</span></div>
+          <div class="nour-variants">
+            {% for value in option.values %}
+              <button class="nour-vbtn {% if loop.first %}active{% endif %} {% if not value.is_available %}out{% endif %}"
+                      onclick="nourVariant(this,'{{ value.name }}','{{ option.id }}')"
+                      data-option="{{ option.id }}" data-value="{{ value.id }}">
+                {{ value.name }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {# Qty #}
+      <div class="nour-qty-row">
+        <div class="nour-qty-ctrl">
+          <button class="nour-qty-btn" onclick="nourQty(-1)">−</button>
+          <input class="nour-qty-val" type="number" id="nourQty" value="1" min="1" max="{{ product.quantity }}">
+          <button class="nour-qty-btn" onclick="nourQty(1)">+</button>
+        </div>
+        <div class="nour-subtotal">المجموع: <strong id="nourSubtotal">{{ product.price.formatted }}</strong></div>
+      </div>
+
+      {# CTAs #}
+      <div class="nour-cta-stack">
+        {% if product.quantity > 0 %}
+          <salla-add-product-button product-id="{{ product.id }}" class="nour-btn-add-cart">
+            أضيفي للسلة
+          </salla-add-product-button>
+        {% else %}
+          <button class="nour-btn-add-cart" disabled>نفد المخزون</button>
+        {% endif %}
+        <salla-buy-now-button product-id="{{ product.id }}" class="nour-btn-buy-now">
+          اشتري الآن
+        </salla-buy-now-button>
+      </div>
+
+      {# Recent buyers #}
+      {% if theme.settings.get('show_recent_buyers', true) %}
+        <div class="nour-recent-buyers">
+          🔥 مشتريات جديدة منذ ساعة
+        </div>
+      {% endif %}
+
+      {# Payment icons #}
+      <salla-payment-icons></salla-payment-icons>
+
+      {# Trust row #}
+      <div class="nour-trust-mini">
+        <div class="nour-tm-item">🚚 شحن مجاني</div>
+        <div class="nour-tm-item">↩ إرجاع 30 يوم</div>
+        <div class="nour-tm-item">🔒 دفع آمن</div>
+        <div class="nour-tm-item">🎁 تغليف فاخر</div>
+      </div>
+
+      {# Accordion #}
+      <div class="nour-acc-list">
+        {% if product.description %}
+          <div class="nour-acc-item">
+            <button class="nour-acc-head" onclick="nourAcc(this)">
+              تفاصيل المنتج <span class="nour-acc-icon">+</span>
+            </button>
+            <div class="nour-acc-body">{{ product.description | raw }}</div>
+          </div>
+        {% endif %}
+        <div class="nour-acc-item">
+          <button class="nour-acc-head" onclick="nourAcc(this)">
+            الشحن والإرجاع <span class="nour-acc-icon">+</span>
+          </button>
+          <div class="nour-acc-body">
+            <p>شحن مجاني للطلبات فوق 200 ر.س</p>
+            <p>التوصيل خلال 2-3 أيام عمل</p>
+            <p>إرجاع مجاني خلال 30 يوم</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  {# Reviews #}
+  <div class="nour-reviews-wrap" id="reviews">
+    <salla-reviews product-id="{{ product.id }}"></salla-reviews>
+  </div>
+
+  {# Related products #}
+  {% if product.related_products | length > 0 %}
+    <div class="nour-related">
+      <h2 class="nour-section-title">قد يعجبك أيضاً</h2>
+      <div class="nour-related-grid">
+        {% for related in product.related_products | slice(0,3) %}
+          <a href="{{ related.url }}" class="nour-product-card">
+            <div class="nour-product-card__img">
+              <img src="{{ related.thumbnail }}" alt="{{ related.name }}" loading="lazy">
+            </div>
+            <div class="nour-product-card__body">
+              <div class="nour-product-card__name">{{ related.name }}</div>
+              <div class="nour-product-card__price">{{ related.price.formatted }}</div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+{# Sticky bar #}
+<div class="nour-sticky-bar" id="nourStickyBar">
+  <div class="nour-sb-product">
+    <div class="nour-sb-thumb">
+      <img src="{{ product.images[0].url | default('') }}" alt="{{ product.name }}">
+    </div>
+    <div>
+      <div class="nour-sb-name">{{ product.name }}</div>
+      <div class="nour-sb-price">{{ product.price.formatted }}</div>
+    </div>
+  </div>
+  <salla-add-product-button product-id="{{ product.id }}" class="nour-sb-btn">
+    أضيفي للسلة
+  </salla-add-product-button>
+</div>
+
 {% endblock %}
 
-{% block extra_scripts %}
+{% block scripts %}
+{{ parent() }}
 <script>
-// Gallery
-function switchThumb(thumb, imgUrl){
-  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-  thumb.classList.add('active');
-  document.getElementById('mainProductImg').src = imgUrl;
+function nourThumb(el, url) {
+  document.querySelectorAll('.nour-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('nourProductImg').src = url;
 }
-function goSlide(idx, dot){
-  document.querySelectorAll('.img-dot').forEach(d => d.classList.remove('active'));
-  dot.classList.add('active');
-  document.querySelectorAll('.thumb')[idx]?.click();
+function nourQty(d) {
+  var inp = document.getElementById('nourQty');
+  inp.value = Math.max(1, Math.min(parseInt(inp.max)||99, parseInt(inp.value)+d));
+  nourUpdateSubtotal();
 }
-
-// Accordion
-function toggleAcc(btn){
-  const body = btn.nextElementSibling;
-  const icon = btn.querySelector('.acc-icon');
-  const open = body.classList.contains('open');
-  document.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
-  document.querySelectorAll('.acc-head').forEach(h => { h.classList.remove('open'); h.querySelector('.acc-icon').textContent = '+'; });
-  if(!open){ body.classList.add('open'); btn.classList.add('open'); icon.textContent = '−'; }
+function nourUpdateSubtotal() {
+  var price = {{ product.price.amount }};
+  var qty = parseInt(document.getElementById('nourQty').value)||1;
+  document.getElementById('nourSubtotal').textContent = (price*qty).toFixed(2)+' {{ product.price.currency }}';
 }
-
-// Qty
-function chQty(d){
-  const input = document.getElementById('qtyVal');
-  const max = parseInt(input.max) || 99;
-  input.value = Math.max(1, Math.min(max, parseInt(input.value) + d));
-  updateSubtotal();
+function nourSub(type) {
+  ['nourSubOnce','nourSubRec'].forEach(function(id){
+    document.getElementById(id).classList.remove('selected');
+  });
+  document.getElementById(type==='once'?'nourSubOnce':'nourSubRec').classList.add('selected');
 }
-function updateSubtotal(){
-  const basePrice = {{ product.price.amount }};
-  const qty = parseInt(document.getElementById('qtyVal').value) || 1;
-  document.getElementById('subtotalDisplay').textContent = (basePrice * qty).toFixed(2) + ' {{ product.price.currency }}';
+function nourVariant(btn, name, optId) {
+  document.querySelectorAll('.nour-vbtn[data-option="'+optId+'"]').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var lbl = document.getElementById('nourVar-'+optId);
+  if(lbl) lbl.textContent = name;
 }
-
-// Subscription
-function selectSub(type){
-  document.getElementById('subOnce').className = 'sub-option' + (type === 'once' ? ' selected' : '');
-  document.getElementById('subRecurring').className = 'sub-option' + (type === 'recurring' ? ' selected' : '');
-  document.getElementById('radioOnce').className = 'sub-radio' + (type === 'once' ? ' selected' : '');
-  document.getElementById('radioRecurring').className = 'sub-radio' + (type === 'recurring' ? ' selected' : '');
+function nourAcc(btn) {
+  var body = btn.nextElementSibling;
+  var icon = btn.querySelector('.nour-acc-icon');
+  var isOpen = body.classList.contains('open');
+  document.querySelectorAll('.nour-acc-body').forEach(function(b){ b.classList.remove('open'); });
+  document.querySelectorAll('.nour-acc-head').forEach(function(h){ h.classList.remove('open'); var i=h.querySelector('.nour-acc-icon'); if(i)i.textContent='+'; });
+  if(!isOpen){ body.classList.add('open'); btn.classList.add('open'); if(icon)icon.textContent='−'; }
 }
-
-// Sticky bar
-window.addEventListener('scroll', () => {
-  const hero = document.querySelector('.product-hero');
-  const bar = document.getElementById('stickyBar');
-  if(bar && hero) bar.classList.toggle('show', hero.getBoundingClientRect().bottom < 0);
+window.addEventListener('scroll', function() {
+  var bar = document.getElementById('nourStickyBar');
+  var grid = document.querySelector('.nour-product-grid');
+  if(bar && grid) bar.classList.toggle('show', grid.getBoundingClientRect().bottom < 0);
 });
-
-// Mobile menu
-function toggleMenu(){
-  document.getElementById('mobileMenu').classList.toggle('open');
-  document.getElementById('hamburger').classList.toggle('open');
-}
-function toggleSearch(){
-  document.getElementById('searchBar').classList.toggle('open');
-}
 </script>
 {% endblock %}

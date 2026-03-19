@@ -1,51 +1,38 @@
-<section class="hero">
-  <div class="hero-content">
+<section class="nour-hero" style="min-height:90vh;background:#1A1A18;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 60px;gap:40px;position:relative;overflow:hidden;">
+
+  <div style="position:relative;z-index:2;">
     {% if component.badge_text %}
-      <div class="hero-badge">{{ component.badge_text }}</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(200,168,118,.15);border:1px solid rgba(200,168,118,.3);color:#F0DFB8;padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;margin-bottom:24px;">
+        <span style="width:6px;height:6px;background:#C8A876;border-radius:50%;"></span>
+        {{ component.badge_text }}
+      </div>
     {% endif %}
 
-    <h1 class="hero-h1">
+    <h1 style="font-size:clamp(40px,5vw,68px);font-weight:900;color:#FAF8F4;line-height:1.12;margin-bottom:20px;">
       {{ component.heading }}
-      {% if component.heading_italic %}
-        <br><em>{{ component.heading_italic }}</em>
-      {% endif %}
     </h1>
 
     {% if component.subheading %}
-      <p class="hero-sub">{{ component.subheading }}</p>
+      <p style="font-size:18px;color:rgba(250,248,244,.65);line-height:1.7;margin-bottom:36px;max-width:480px;">
+        {{ component.subheading }}
+      </p>
     {% endif %}
 
-    <div class="hero-actions">
-      {% if component.btn_primary_text %}
-        <a href="{{ store.urls.products }}" class="btn-primary">
-          {{ component.btn_primary_text }}
-        </a>
-      {% endif %}
-      {% if component.btn_secondary_text %}
-        <a href="#features" class="btn-outline">
-          {{ component.btn_secondary_text }}
-        </a>
-      {% endif %}
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+      <a href="{{ store.urls.products }}" style="background:#1E3A2F;color:white;border:none;padding:16px 36px;border-radius:8px;font-size:16px;font-weight:800;display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+        {{ component.btn_primary_text | default('اطلبي الآن') }}
+      </a>
     </div>
+  </div>
 
-    {% if component.rating_score and component.rating_count %}
-      <div class="hero-rating">
-        <span class="stars">★★★★★</span>
-        <span>{{ component.rating_score }} — {{ component.rating_count }} {{ 'تقييم موثّق' | trans }}</span>
+  <div style="position:relative;z-index:2;display:flex;justify-content:center;">
+    {% if component.hero_image %}
+      <img src="{{ component.hero_image }}" alt="{{ store.name }}" style="width:100%;max-width:480px;height:560px;object-fit:cover;border-radius:24px;">
+    {% else %}
+      <div style="width:480px;height:560px;border-radius:24px;background:linear-gradient(135deg,#2D4A3E,#1A2E28);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:18px;">
+        أضف صورة المنتج
       </div>
     {% endif %}
   </div>
 
-  <div class="hero-image">
-    <div class="hero-img-wrap">
-      {% if component.hero_image %}
-        <img src="{{ component.hero_image }}" alt="{{ store.name }}" loading="eager">
-      {% else %}
-        <div class="img-placeholder">
-          <i class="hgi-stroke hgi-image-01" style="font-size:48px;opacity:.35"></i>
-          <span>{{ 'أضف صورة المنتج' | trans }}</span>
-        </div>
-      {% endif %}
-    </div>
-  </div>
 </section>

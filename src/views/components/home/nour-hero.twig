@@ -1,0 +1,51 @@
+<section class="hero">
+  <div class="hero-content">
+    {% if component.badge_text %}
+      <div class="hero-badge">{{ component.badge_text }}</div>
+    {% endif %}
+
+    <h1 class="hero-h1">
+      {{ component.heading }}
+      {% if component.heading_italic %}
+        <br><em>{{ component.heading_italic }}</em>
+      {% endif %}
+    </h1>
+
+    {% if component.subheading %}
+      <p class="hero-sub">{{ component.subheading }}</p>
+    {% endif %}
+
+    <div class="hero-actions">
+      {% if component.btn_primary_text %}
+        <a href="{{ store.urls.products }}" class="btn-primary">
+          {{ component.btn_primary_text }}
+        </a>
+      {% endif %}
+      {% if component.btn_secondary_text %}
+        <a href="#features" class="btn-outline">
+          {{ component.btn_secondary_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if component.rating_score and component.rating_count %}
+      <div class="hero-rating">
+        <span class="stars">★★★★★</span>
+        <span>{{ component.rating_score }} — {{ component.rating_count }} {{ 'تقييم موثّق' | trans }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="hero-image">
+    <div class="hero-img-wrap">
+      {% if component.hero_image %}
+        <img src="{{ component.hero_image }}" alt="{{ store.name }}" loading="eager">
+      {% else %}
+        <div class="img-placeholder">
+          <i class="hgi-stroke hgi-image-01" style="font-size:48px;opacity:.35"></i>
+          <span>{{ 'أضف صورة المنتج' | trans }}</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

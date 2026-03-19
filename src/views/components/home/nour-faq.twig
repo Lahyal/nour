@@ -1,0 +1,16 @@
+<section class="faq-section">
+  <span class="section-tag">{{ component.tag | default('أسئلة شائعة') }}</span>
+  <h2 class="section-h2">{{ component.heading }}</h2>
+
+  <div class="faq-cols">
+    {% for faq in component.faqs %}
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          {{ faq.question }}
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">{{ faq.answer }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

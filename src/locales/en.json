@@ -1,27 +1,59 @@
 {
-  "blocks": {
-    "header": {
-      "cart": "Cart"
-    },
-    "appBanner": {
-      "download_now": "download now"
-    }
-  },
-  "pages": {
-    "cart": {
-      "cart_options": "Cart Options"
-    },
-    "order": {
-      "can_edit_or_delete_your_review_within": "You can edit or delete your review within",
-      "edit_period_ended": "The period to edit the review has ended",
-      "delete_period_ended": "The period to delete the review has ended",
-      "days_since_added": "days since it was added",
-      "option_name": "Option name",
-      "option_content": "Content"
-    }
-  },
-  "common": {
-    "bank_offer_sub_title_multiple": "Pay for your purchases via one of the following bank cards and get the specified discount",
-    "bank_offer_sub_title_single": "Pay for your purchases via :bank_name bank card and get discount"
-  }
+  "الرئيسية": "Home",
+  "المتجر": "Shop",
+  "السلة": "Cart",
+  "المفضلة": "Wishlist",
+  "بحث": "Search",
+  "القائمة": "Menu",
+  "أضيفي للسلة": "Add to Cart",
+  "اشتري الآن": "Buy Now",
+  "نفد المخزون": "Out of Stock",
+  "متوفر": "In Stock",
+  "قطعة متبقية فقط": "items left",
+  "شراء مرة واحدة": "One-time purchase",
+  "اشتركي واوفري كل شهر": "Subscribe & save monthly",
+  "ألغي في أي وقت": "Cancel anytime",
+  "وفري": "Save",
+  "اختاري الكمية": "Choose quantity",
+  "المجموع": "Total",
+  "قطعة": "item",
+  "تقييم": "reviews",
+  "عميل": "customers",
+  "اشتروا هذا المنتج": "purchased this",
+  "يوصون به": "recommend it",
+  "مشتري موثّق": "Verified buyer",
+  "شحن مجاني": "Free shipping",
+  "إرجاع 30 يوم": "30-day returns",
+  "دفع آمن": "Secure payment",
+  "تغليف فاخر": "Premium packaging",
+  "تفاصيل المنتج": "Product details",
+  "الشحن والإرجاع": "Shipping & Returns",
+  "شحن مجاني للطلبات فوق 200 ر.س": "Free shipping on orders over SAR 200",
+  "التوصيل خلال 2-3 أيام عمل": "Delivery within 2-3 business days",
+  "إرجاع مجاني خلال 30 يوم": "Free returns within 30 days",
+  "قد يعجبك أيضاً": "You may also like",
+  "منتجات": "Products",
+  "مكمّلة": "you'll love",
+  "منذ ساعة — مشتريات جديدة": "New purchases in the last hour",
+  "ينتهي العرض": "Offer ends",
+  "خصم": "Save",
+  "على هذا المنتج": "on this product",
+  "عرض خاص": "Special offer",
+  "الأكثر مبيعاً": "Best Seller",
+  "تقييم موثّق": "Verified review",
+  "أضف صورة المنتج": "Add product image",
+  "آراء العملاء": "Customer reviews",
+  "أسئلة شائعة": "FAQ",
+  "المتجر": "Shop",
+  "المساعدة": "Help",
+  "تتبع الطلب": "Track order",
+  "سياسة الإرجاع": "Return policy",
+  "سياسة الشحن": "Shipping policy",
+  "تواصل معنا": "Contact us",
+  "معلومات": "Info",
+  "عن المتجر": "About us",
+  "سياسة الخصوصية": "Privacy policy",
+  "الشروط والأحكام": "Terms of service",
+  "جميع الحقوق محفوظة": "All rights reserved",
+  "مدعوم بـ": "Powered by"
 }

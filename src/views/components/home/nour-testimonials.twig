@@ -1,0 +1,40 @@
+<section class="testimonials-section">
+  <span class="section-label">{{ component.tag | default('آراء العملاء') }}</span>
+  <h2 class="section-title">
+    {{ component.heading }}
+    {% if component.heading_italic %}
+      <em>{{ component.heading_italic }}</em>
+    {% endif %}
+  </h2>
+
+  <div class="testimonials-grid">
+    {% for review in component.reviews %}
+      <div class="tc">
+        <div class="tc-header">
+          <div class="tc-user">
+            {% if review.avatar %}
+              <img src="{{ review.avatar }}" alt="{{ review.name }}" class="tc-av">
+            {% else %}
+              <div class="tc-av">{{ review.name | slice(0,1) }}</div>
+            {% endif %}
+            <div>
+              <div class="tc-name">{{ review.name }}</div>
+              <div class="tc-meta">
+                {% if review.location %}{{ review.location }} • {% endif %}
+                {{ 'مشتري موثّق' | trans }}
+                <i class="hgi-stroke hgi-checkmark-circle-01" style="font-size:12px;color:var(--forest)"></i>
+              </div>
+            </div>
+          </div>
+          <div class="tc-stars">
+            {% for i in 1..review.rating %}★{% endfor %}
+          </div>
+        </div>
+        {% if review.title %}
+          <div class="tc-title">{{ review.title }}</div>
+        {% endif %}
+        <div class="tc-text">"{{ review.text }}"</div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

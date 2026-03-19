@@ -1,0 +1,132 @@
+{# nour-bundle-options.twig
+   Shows tiered quantity bundle cards on product page.
+   Reads bundle tiers from twilight.json component fields.
+   Falls back to a single-price display if no bundles configured. #}
+
+{% set bundles = component.bundles | default([]) %}
+
+{% if bundles | length > 0 %}
+  <div class="bundle-section">
+    <div class="bundle-label">
+      <i class="hgi-stroke hgi-package-01 icon-sm"></i>
+      {{ 'اختاري الكمية' | trans }}
+    </div>
+    <div class="bundle-cards" id="bundleCards">
+      {% for bundle in bundles %}
+        <div class="bundle-card {% if loop.first %}active{% endif %}"
+             id="bundle-{{ loop.index }}"
+             onclick="selectBundle({{ loop.index }}, {{ bundle.unit_price }}, {{ bundle.qty }})">
+
+          {% if bundle.badge %}
+            <div class="bundle-badge-top {% if bundle.is_best %}best{% endif %}">
+              {{ bundle.badge }}
+            </div>
+          {% endif %}
+
+          <div class="bundle-qty">× {{ bundle.qty }}</div>
+
+          <div class="bundle-body">
+            <div class="bundle-name">{{ bundle.label }}</div>
+            <div class="bundle-price-row">
+              <span class="bundle-price">{{ bundle.unit_price }}</span>
+              <span class="bundle-unit">{{ product.price.currency }} / {{ 'قطعة' | trans }}</span>
+            </div>
+            {% set saving = (product.regular_price.amount - bundle.unit_price) * bundle.qty %}
+            {% if saving > 0 %}
+              <div class="bundle-saving">
+                {{ 'وفري' | trans }} {{ saving | number_format }} {{ product.price.currency }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="bundle-check">
+            <i class="hgi-stroke hgi-checkmark-circle-01"></i>
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+    {# Bundle total row #}
+    <div class="bundle-total">
+      <div class="bundle-total-left">
+        <span class="bundle-total-label">{{ 'المجموع' | trans }}</span>
+        <span class="bundle-total-was" id="bundleTotalWas">
+          {{ product.regular_price.formatted }}
+        </span>
+      </div>
+      <div class="bundle-total-right">
+        <span class="bundle-total-save" id="bundleSaveLabel">
+          {% if bundles[0].badge %}{{ bundles[0].badge }}{% endif %}
+        </span>
+        <span class="bundle-total-price" id="bundleTotalPrice">
+          {{ bundles[0].unit_price }} {{ product.price.currency }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  var bundleData = {{ bundles | json_encode }};
+  var currentBundleQty = 1;
+  var currentBundlePrice = {{ bundles[0].unit_price | default(product.price.amount) }};
+
+  function selectBundle(idx, unitPrice, qty){
+    currentBundleQty = qty;
+    currentBundlePrice = unitPrice;
+
+    document.querySelectorAll('.bundle-card').forEach((c, i) => {
+      c.classList.toggle('active', i + 1 === idx);
+    });
+
+    const total = unitPrice * qty;
+    document.getElementById('bundleTotalPrice').textContent = total.toFixed(2) + ' {{ product.price.currency }}';
+
+    var origTotal = {{ product.regular_price.amount }} * qty;
+    document.getElementById('bundleTotalWas').textContent = origTotal.toFixed(2) + ' {{ product.price.currency }}';
+
+    var bundle = bundleData[idx - 1];
+    document.getElementById('bundleSaveLabel').textContent = bundle.badge || '';
+
+    // sync qty input
+    var qtyInput = document.getElementById('qtyVal');
+    if(qtyInput) qtyInput.value = qty;
+
+    // sync price display
+    var priceNow = document.getElementById('priceNow');
+    if(priceNow) priceNow.textContent = unitPrice.toFixed(2);
+
+    updateSubtotal();
+  }
+  </script>
+
+{% else %}
+  {# No bundles configured — show native Salla offer if exists #}
+  {% if product.has_special_price %}
+    <div class="offer-banner type-{{ product.offer.type | default('percentage') }}">
+      <div class="offer-icon">
+        <i class="hgi-stroke hgi-percent-circle"></i>
+      </div>
+      <div class="offer-body">
+        <div class="offer-title">
+          {% if product.offer.percent %}
+            {{ 'خصم' | trans }} {{ product.offer.percent }}% {{ 'على هذا المنتج' | trans }}
+          {% elseif product.offer.amount %}
+            {{ 'وفري' | trans }} {{ product.offer.amount }} {{ product.price.currency }}
+          {% else %}
+            {{ 'عرض خاص' | trans }}
+          {% endif %}
+        </div>
+        {% if product.offer.expired_at %}
+          <div class="offer-expiry" data-expiry="{{ product.offer.expired_at }}">
+            <i class="hgi-stroke hgi-clock-01" style="font-size:12px"></i>
+            {{ 'ينتهي العرض' | trans }}: {{ product.offer.expired_at | date('Y-m-d') }}
+          </div>
+        {% endif %}
+      </div>
+      {% if product.offer.percent %}
+        <span class="offer-pill">{{ 'وفري' | trans }} {{ product.offer.percent }}%</span>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endif %}

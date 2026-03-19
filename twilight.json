@@ -1,313 +1,314 @@
 {
-  "name": {
-    "ar": "Nour",
-    "en": "Nour"
-  },
-  "repository": "https://github.com/Lahyal/nour",
-  "author_email": "contact@lahyal.com",
-  "features": [
-    "mega-menu",
-    "fonts",
-    "color",
-    "breadcrumb",
-    "unite-cards-height",
-    "component-featured-products",
-    "component-fixed-banner",
-    "component-fixed-products",
-    "component-products-slider",
-    "component-photos-slider",
-    "component-parallax-background",
-    "component-testimonials",
-    "component-square-photos",
-    "component-store-features",
-    "component-youtube",
-    "filters"
-  ],
-  "settings": [
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "شريط علوي داكن",
-      "id": "topnav_is_dark",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
+    "name": {
+        "ar": "Nour",
+        "en": "Nour"
     },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار شريط الإعلانات",
-      "id": "announcement_visible",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-text-alt",
-      "label": "نص شريط الإعلانات",
-      "id": "announcement_text",
-      "format": "text",
-      "required": false,
-      "value": "شحن مجاني على الطلبات فوق 200 ريال"
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "تفعيل الباقات على صفحة المنتج",
-      "id": "bundle_enabled",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "تفعيل خيار الاشتراك الشهري",
-      "id": "subscription_enabled",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-text-alt",
-      "label": "نسبة خصم الاشتراك",
-      "id": "subscription_discount",
-      "format": "text",
-      "required": false,
-      "value": "15"
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار المشترين الأخيرين",
-      "id": "show_recent_buyers",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-text-alt",
-      "label": "نص الفوتر",
-      "id": "footer_tagline",
-      "format": "text",
-      "required": false,
-      "value": "منتجات طبيعية فاخرة لنساء المنطقة العربية"
-    },
-    {
-      "type": "string",
-      "id": "placeholder",
-      "format": "hidden",
-      "label": "placeholder",
-      "value": "images/img_placeholder.png"
+    "repository": "https://github.com/Lahyal/nour",
+    "author_email": "contact@lahyal.com",
+    "features": [
+        "mega-menu",
+        "fonts",
+        "color",
+        "breadcrumb",
+        "unite-cards-height",
+        "component-featured-products",
+        "component-fixed-banner",
+        "component-fixed-products",
+        "component-products-slider",
+        "component-photos-slider",
+        "component-parallax-background",
+        "component-testimonials",
+        "component-square-photos",
+        "component-store-features",
+        "component-youtube",
+        "filters",
+        "component-random-testimonials"
+    ],
+    "settings": [
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "شريط علوي داكن",
+            "id": "topnav_is_dark",
+            "format": "switch",
+            "required": false,
+            "value": false,
+            "selected": false
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "إظهار شريط الإعلانات",
+            "id": "announcement_visible",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true
+        },
+        {
+            "type": "string",
+            "icon": "sicon-format-text-alt",
+            "label": "نص شريط الإعلانات",
+            "id": "announcement_text",
+            "format": "text",
+            "required": false,
+            "value": "شحن مجاني على الطلبات فوق 200 ريال"
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "تفعيل الباقات على صفحة المنتج",
+            "id": "bundle_enabled",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "تفعيل خيار الاشتراك الشهري",
+            "id": "subscription_enabled",
+            "format": "switch",
+            "required": false,
+            "value": false,
+            "selected": false
+        },
+        {
+            "type": "string",
+            "icon": "sicon-format-text-alt",
+            "label": "نسبة خصم الاشتراك",
+            "id": "subscription_discount",
+            "format": "text",
+            "required": false,
+            "value": "15"
+        },
+        {
+            "type": "boolean",
+            "icon": "sicon-toggle-off",
+            "label": "إظهار المشترين الأخيرين",
+            "id": "show_recent_buyers",
+            "format": "switch",
+            "required": false,
+            "value": true,
+            "selected": true
+        },
+        {
+            "type": "string",
+            "icon": "sicon-format-text-alt",
+            "label": "نص الفوتر",
+            "id": "footer_tagline",
+            "format": "text",
+            "required": false,
+            "value": "منتجات طبيعية فاخرة لنساء المنطقة العربية"
+        },
+        {
+            "type": "string",
+            "id": "placeholder",
+            "format": "hidden",
+            "label": "placeholder",
+            "value": "images/img_placeholder.png"
+        }
+    ],
+    "components": [
+        {
+            "key": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "title": {
+                "en": "Nour Hero",
+                "ar": "قسم الهيرو الرئيسي"
+            },
+            "icon": "sicon-image-carousel",
+            "path": "home.nour-hero",
+            "fields": [
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "الشارة العلوية",
+                    "id": "badge_text",
+                    "format": "text",
+                    "required": false,
+                    "value": "الأكثر مبيعاً"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "العنوان الرئيسي",
+                    "id": "heading",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": true,
+                    "value": "جمالك الطبيعي يبدأ من هنا"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-typography",
+                    "label": "النص الفرعي",
+                    "id": "subheading",
+                    "format": "textarea",
+                    "multilanguage": true,
+                    "required": false,
+                    "value": "منتجات طبيعية فاخرة مصممة خصيصاً للمرأة العربية"
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-image",
+                    "label": "صورة الهيرو",
+                    "id": "hero_image",
+                    "format": "image",
+                    "required": false
+                },
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "نص الزر الرئيسي",
+                    "id": "btn_primary_text",
+                    "format": "text",
+                    "required": false,
+                    "value": "اطلبي الآن"
+                }
+            ]
+        },
+        {
+            "key": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "title": {
+                "en": "Nour FAQ",
+                "ar": "الأسئلة الشائعة"
+            },
+            "icon": "sicon-question",
+            "path": "home.nour-faq",
+            "fields": [
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "العنوان",
+                    "id": "heading",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": true,
+                    "value": "أسئلة شائعة"
+                },
+                {
+                    "id": "faqs",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 10,
+                    "item_label": "سؤال",
+                    "value": [
+                        {
+                            "faqs.question": "ما هي مدة الشحن؟",
+                            "faqs.answer": "يتم التوصيل خلال 2-3 أيام عمل داخل المملكة العربية السعودية"
+                        },
+                        {
+                            "faqs.question": "هل يمكنني إرجاع المنتج؟",
+                            "faqs.answer": "نعم، نقبل الإرجاع خلال 30 يوم من تاريخ الاستلام"
+                        }
+                    ],
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "السؤال",
+                            "id": "faqs.question",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": true
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-typography",
+                            "label": "الجواب",
+                            "id": "faqs.answer",
+                            "format": "textarea",
+                            "multilanguage": true,
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+            "title": {
+                "en": "Nour Testimonials",
+                "ar": "آراء العملاء"
+            },
+            "icon": "sicon-chat-bubbles",
+            "path": "home.nour-testimonials",
+            "fields": [
+                {
+                    "type": "string",
+                    "icon": "sicon-format-text-alt",
+                    "label": "العنوان",
+                    "id": "heading",
+                    "format": "text",
+                    "multilanguage": true,
+                    "required": true,
+                    "value": "ماذا تقول عملاؤنا؟"
+                },
+                {
+                    "id": "reviews",
+                    "type": "collection",
+                    "format": "collection",
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 6,
+                    "item_label": "تقييم",
+                    "value": [
+                        {
+                            "reviews.name": "سارة الأحمد",
+                            "reviews.rating": 5,
+                            "reviews.title": "منتج رائع!",
+                            "reviews.text": "أفضل منتج جربته، النتائج مذهلة ❤️"
+                        }
+                    ],
+                    "fields": [
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "اسم العميل",
+                            "id": "reviews.name",
+                            "format": "text",
+                            "required": true
+                        },
+                        {
+                            "type": "number",
+                            "icon": "sicon-pencil-ruler",
+                            "label": "التقييم (1-5)",
+                            "id": "reviews.rating",
+                            "format": "integer",
+                            "value": 5,
+                            "minimum": 1,
+                            "maximum": 5,
+                            "required": false
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-format-text-alt",
+                            "label": "عنوان التقييم",
+                            "id": "reviews.title",
+                            "format": "text",
+                            "multilanguage": true,
+                            "required": false
+                        },
+                        {
+                            "type": "string",
+                            "icon": "sicon-typography",
+                            "label": "نص التقييم",
+                            "id": "reviews.text",
+                            "format": "textarea",
+                            "multilanguage": true,
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "support_url": "https://salla.dev",
+    "description": {
+        "ar": "قالب عربي احترافي مع إدارة عروض ذكية",
+        "en": "Professional Arabic theme with smart offer management"
     }
-  ],
-  "components": [
-    {
-      "key": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "title": {
-        "en": "Nour Hero",
-        "ar": "قسم الهيرو الرئيسي"
-      },
-      "icon": "sicon-image-carousel",
-      "path": "home.nour-hero",
-      "fields": [
-        {
-          "type": "string",
-          "icon": "sicon-format-text-alt",
-          "label": "الشارة العلوية",
-          "id": "badge_text",
-          "format": "text",
-          "required": false,
-          "value": "الأكثر مبيعاً"
-        },
-        {
-          "type": "string",
-          "icon": "sicon-format-text-alt",
-          "label": "العنوان الرئيسي",
-          "id": "heading",
-          "format": "text",
-          "multilanguage": true,
-          "required": true,
-          "value": "جمالك الطبيعي يبدأ من هنا"
-        },
-        {
-          "type": "string",
-          "icon": "sicon-typography",
-          "label": "النص الفرعي",
-          "id": "subheading",
-          "format": "textarea",
-          "multilanguage": true,
-          "required": false,
-          "value": "منتجات طبيعية فاخرة مصممة خصيصاً للمرأة العربية"
-        },
-        {
-          "type": "string",
-          "icon": "sicon-image",
-          "label": "صورة الهيرو",
-          "id": "hero_image",
-          "format": "image",
-          "required": false
-        },
-        {
-          "type": "string",
-          "icon": "sicon-format-text-alt",
-          "label": "نص الزر الرئيسي",
-          "id": "btn_primary_text",
-          "format": "text",
-          "required": false,
-          "value": "اطلبي الآن"
-        }
-      ]
-    },
-    {
-      "key": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-      "title": {
-        "en": "Nour FAQ",
-        "ar": "الأسئلة الشائعة"
-      },
-      "icon": "sicon-question",
-      "path": "home.nour-faq",
-      "fields": [
-        {
-          "type": "string",
-          "icon": "sicon-format-text-alt",
-          "label": "العنوان",
-          "id": "heading",
-          "format": "text",
-          "multilanguage": true,
-          "required": true,
-          "value": "أسئلة شائعة"
-        },
-        {
-          "id": "faqs",
-          "type": "collection",
-          "format": "collection",
-          "required": true,
-          "minLength": 1,
-          "maxLength": 10,
-          "item_label": "سؤال",
-          "value": [
-            {
-              "faqs.question": "ما هي مدة الشحن؟",
-              "faqs.answer": "يتم التوصيل خلال 2-3 أيام عمل داخل المملكة العربية السعودية"
-            },
-            {
-              "faqs.question": "هل يمكنني إرجاع المنتج؟",
-              "faqs.answer": "نعم، نقبل الإرجاع خلال 30 يوم من تاريخ الاستلام"
-            }
-          ],
-          "fields": [
-            {
-              "type": "string",
-              "icon": "sicon-format-text-alt",
-              "label": "السؤال",
-              "id": "faqs.question",
-              "format": "text",
-              "multilanguage": true,
-              "required": true
-            },
-            {
-              "type": "string",
-              "icon": "sicon-typography",
-              "label": "الجواب",
-              "id": "faqs.answer",
-              "format": "textarea",
-              "multilanguage": true,
-              "required": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "key": "c3d4e5f6-a7b8-9012-cdef-123456789012",
-      "title": {
-        "en": "Nour Testimonials",
-        "ar": "آراء العملاء"
-      },
-      "icon": "sicon-chat-bubbles",
-      "path": "home.nour-testimonials",
-      "fields": [
-        {
-          "type": "string",
-          "icon": "sicon-format-text-alt",
-          "label": "العنوان",
-          "id": "heading",
-          "format": "text",
-          "multilanguage": true,
-          "required": true,
-          "value": "ماذا تقول عملاؤنا؟"
-        },
-        {
-          "id": "reviews",
-          "type": "collection",
-          "format": "collection",
-          "required": true,
-          "minLength": 1,
-          "maxLength": 6,
-          "item_label": "تقييم",
-          "value": [
-            {
-              "reviews.name": "سارة الأحمد",
-              "reviews.rating": 5,
-              "reviews.title": "منتج رائع!",
-              "reviews.text": "أفضل منتج جربته، النتائج مذهلة ❤️"
-            }
-          ],
-          "fields": [
-            {
-              "type": "string",
-              "icon": "sicon-format-text-alt",
-              "label": "اسم العميل",
-              "id": "reviews.name",
-              "format": "text",
-              "required": true
-            },
-            {
-              "type": "number",
-              "icon": "sicon-pencil-ruler",
-              "label": "التقييم (1-5)",
-              "id": "reviews.rating",
-              "format": "integer",
-              "value": 5,
-              "minimum": 1,
-              "maximum": 5,
-              "required": false
-            },
-            {
-              "type": "string",
-              "icon": "sicon-format-text-alt",
-              "label": "عنوان التقييم",
-              "id": "reviews.title",
-              "format": "text",
-              "multilanguage": true,
-              "required": false
-            },
-            {
-              "type": "string",
-              "icon": "sicon-typography",
-              "label": "نص التقييم",
-              "id": "reviews.text",
-              "format": "textarea",
-              "multilanguage": true,
-              "required": true
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "support_url": "https://salla.dev",
-  "description": {
-    "ar": "قالب عربي احترافي مع إدارة عروض ذكية",
-    "en": "Professional Arabic theme with smart offer management"
-  }
 }

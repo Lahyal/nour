@@ -1,39 +1,12 @@
-{#
-| component.badge_text       | string  | Top badge label
-| component.heading          | string  | Main headline
-| component.subheading       | string  | Sub text
-| component.hero_image       | string  | Product image url
-| component.btn_primary_text | string  | CTA button text
-| component.rating_score     | string  | e.g. 4.8
-| component.rating_count     | string  | e.g. 12,319
-#}
 <section class="s-block nour-hero">
   <div class="nour-hero__content">
-    {% if component.badge_text %}
-      <div class="nour-hero__badge">
-        <span class="nour-hero__badge-dot"></span>
-        {{ component.badge_text }}
-      </div>
-    {% endif %}
-    <h1 class="nour-hero__title">{{ component.heading | default('جمالك الطبيعي يبدأ من هنا') }}</h1>
-    {% if component.subheading %}
-      <p class="nour-hero__sub">{{ component.subheading }}</p>
-    {% endif %}
-    <div class="nour-hero__actions">
-      <a href="{{ store.urls.products }}" class="nour-btn-primary">{{ component.btn_primary_text | default('اطلبي الآن') }}</a>
-    </div>
-    {% if component.rating_score %}
-      <div class="nour-hero__rating">
-        <span class="nour-stars">★★★★★</span>
-        <span>{{ component.rating_score }} — {{ component.rating_count }} تقييم موثّق</span>
-      </div>
-    {% endif %}
+    <h1 class="nour-hero__title">{{ component.heading }}</h1>
+    <p class="nour-hero__sub">{{ component.subheading }}</p>
+    <a href="{{ store.urls.products }}" class="nour-btn-primary">{{ component.btn_primary_text }}</a>
   </div>
   <div class="nour-hero__image">
     {% if component.hero_image %}
-      <img src="{{ component.hero_image }}" alt="{{ store.name }}" loading="eager">
-    {% else %}
-      <div class="nour-hero__image-placeholder"><span>أضف صورة المنتج</span></div>
+      <img src="{{ component.hero_image }}" alt="{{ store.name }}">
     {% endif %}
   </div>
 </section>

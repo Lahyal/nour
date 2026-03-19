@@ -306,9 +306,9 @@
             ]
         }
     ],
-    "support_url": "https://salla.dev",
+    "support_url": "https://example.com",
     "description": {
-        "ar": "قالب عربي احترافي مع إدارة عروض ذكية",
-        "en": "Professional Arabic theme with smart offer management"
+        "ar": null,
+        "en": null
     }
 }
